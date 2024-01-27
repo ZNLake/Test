@@ -4,7 +4,9 @@ import os
 import json
 import requests
 
-app = Flask(__name__, static_folder='frontend')
+kintone_api_key = os.getenv('KINTONE_API_KEY')
+
+app = Flask(__name__, static_folder='./frontend')
 base_url = "https://katarinaav.kintone.com"
 app_id = "2"
 add_record_endpoint = f'{base_url}/k/v1/record.json'
