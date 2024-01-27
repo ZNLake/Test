@@ -10,7 +10,6 @@ import { Auth0Provider } from '@auth0/auth0-react';
 ReactDOM.createRoot(document.getElementById('root')).render(
    <React.StrictMode>
 <BrowserRouter>
-
  <Auth0Provider
     domain="dev-3q743fc24vrnr2ng.us.auth0.com"
     clientId="gOEkoNaxbDeDVHLXRXIEppzqD5GtvARj"
