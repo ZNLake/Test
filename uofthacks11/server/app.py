@@ -1,10 +1,11 @@
 from flask import Flask, render_template, send_from_directory
 from vision import call_vision_api
+from spotifyrec import get_track_list
 import os
 import json
 import requests
 
-app = Flask(__name__, static_folder='frontend')
+app = Flask(__name__, static_folder='./frontend')
 base_url = "https://katarinaav.kintone.com"
 app_id = "2"
 add_record_endpoint = f'{base_url}/k/v1/record.json'
@@ -59,6 +60,9 @@ def execute():
         top_three.append({'emotion': emotion, 'score': score})
     
     top_three = sorted(top_three, key=lambda x: x['score'], reverse=True)[:3]
+
+    track_list = get_track_list(top_three)
+    
     return top_three
 
 

@@ -15,10 +15,10 @@ FROM python:3.9
 WORKDIR /app
 
 COPY ./server .
-#COPY --from=build-stage /app/dist ./frontend
+COPY --from=build-stage /app/dist ./frontend
 
 RUN pip install -r requirements.txt
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["flask", "run"]
 
 EXPOSE 5000

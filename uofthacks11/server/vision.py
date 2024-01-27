@@ -33,6 +33,9 @@ def call_vision_api(file_url):
         if value > (2*len(faces)):
             main_emotions.append(emotion)
 
+    if main_emotions == []:
+        main_emotions.append("chill")
+
     return main_emotions
     
 
