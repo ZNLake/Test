@@ -13,11 +13,11 @@ app_id = "2"
 add_record_endpoint = f'{base_url}/k/v1/record.json'
 retrieve_records_endpoint = f'{base_url}/k/v1/records.json'
 add_record_headers = {
-    'X-Cybozu-API-Token': os.getenv("kintone_api_key"),
+    'X-Cybozu-API-Token': kintone_api_key,
     'Content-Type': 'application/json'
 }
 retrieve_records_headers = {
-    'X-Cybozu-API-Token': os.getenv("kintone_api_key")
+    'X-Cybozu-API-Token': kintone_api_key
 }
 params = {
         "app": app_id
