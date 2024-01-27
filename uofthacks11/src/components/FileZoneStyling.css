@@ -1,0 +1,19 @@
+.mainPageWrapper {
+  width: 50vw;
+  height: 27.1875rem;
+  background: #f1ab5e;
+  border-radius: 23px;
+  box-shadow: -9px 7px 0px 0px #d29451;
+  margin: auto;
+}
+
+.fileZoneWrapper {
+  width: 30vw;
+  height: 50%;
+  background: #f1ab5e;
+  border-radius: 23px;
+  box-shadow: -9px 7px 0px 0px #d29451;
+  margin-left: 20%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
