@@ -2,6 +2,7 @@ from flask import Flask
 import json
 import requests
 import os
+import os
 
 google_headers = {"Authorization": f"Bearer: {os.getenv('VISION_API_KEY')}"}
 url = "https://api.edenai.run/v2/image/face_detection"
