@@ -1,42 +1,32 @@
 from flask import Flask
-import json
-import requests
-
-headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZDAyYzg2MTQtNjJmNC00NWRhLWJiZjYtMGQ4ZWU0YTRkMTY4IiwidHlwZSI6InNhbmRib3hfYXBpX3Rva2VuIn0.H9c1fl9MA09se1MtPtU4VYBABTe2eXRKUHc8YX5az1I"}
-#headers = {"Authorization": "Bearer xCBlFtgH5CAOQUMUAiSuEIh71pw8KQPjAvhX0gGl"}
-url = "https://api.edenai.run/v2/image/face_detection"
-json_payload = {
-    "providers": "google",
-    "file_url": "https://sadanduseless.b-cdn.net/wp-content/uploads/2021/11/awkward-family-photo15.jpg",
-    "fallback_providers": ""
-}
-
+from vision import call_vision_api
 app = Flask(__name__)
 
 @app.route('/')
-def upload():
-    response = requests.post(url, json=json_payload, headers=headers)
-    result = json.loads(response.text)
-
-    emotions = ["joy", "sorrow", "anger", "surprise", "disgust", "fear", "confusion", "calm", "neutral", "contempt"]
+def execute():
+    file_urls = ['https://images.inc.com/uploaded_files/image/1920x1080/getty_152414899_97046097045006_68075.jpg', 'https://sadanduseless.b-cdn.net/wp-content/uploads/2021/11/awkward-family-photo15.jpg', 'https://assets3.cbsnewsstatic.com/hub/i/r/2010/08/20/89d66a34-a642-11e2-a3f0-029118418759/thumbnail/640x480/3c127f50286ff6f1fc5df89d5b79f25b/iStock_000008964742XSmall.jpg?v=9bdba4fec5b17ee7e8ba9ef8c71cf431']
+    emotions = []
+    for file_url in file_urls:
+        emotion = call_vision_api(file_url=file_url)
+        emotions.extend(emotion)
+    # add to kintone db
+        
+    emotion_count = {}
+    for emotion in emotions:
+        if emotion in emotion_count.keys():
+            emotion_count[emotion] += 1
+        else:
+            emotion_count[emotion] = 1
     
-    emotion_dict = {"joy": 0, "sorrow": 0, "anger": 0, "surprise": 0, "disgust": 0, "fear": 0, "confusion": 0, "calm": 0, "neutral": 0, "contempt": 0}
-    faces = result["google"]["items"]
-    for face in faces:
-        for emotion in emotions:
-            if face["emotions"][emotion] != None:
-                emotion_dict[emotion] += face["emotions"][emotion]
+    total_urls = len(file_urls)
+    top_three = []
+    for emotion, count in emotion_count.items():
+        score = count / total_urls
+        top_three.append({'emotion': emotion, 'score': score})
     
-    main_emotions = []
-
-    for emotion, value in emotion_dict.items():
-        if value > (3*len(faces)):
-            main_emotions.append(emotion)
-
-    return main_emotions
-    
-
-
+    # Sort top_three based on score in descending order
+    top_three = sorted(top_three, key=lambda x: x['score'], reverse=True)[:3]
+    return top_three
 
 if __name__ == '__main__':
     app.run(debug=True)
