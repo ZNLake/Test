@@ -5,6 +5,8 @@ import os
 import json
 import requests
 
+kintone_api_key = os.getenv('KINTONE_API_KEY')
+
 app = Flask(__name__, static_folder='./frontend')
 base_url = "https://katarinaav.kintone.com"
 app_id = "2"
