@@ -3,7 +3,6 @@ import json
 import requests
 
 google_headers = {"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZDAyYzg2MTQtNjJmNC00NWRhLWJiZjYtMGQ4ZWU0YTRkMTY4IiwidHlwZSI6ImFwaV90b2tlbiJ9.ESlAlVbzMJ6JZyVXFuYuGgotC-2dtfpTwqEqP03xNI8"}
-#headers = {"Authorization": "Bearer xCBlFtgH5CAOQUMUAiSuEIh71pw8KQPjAvhX0gGl"}
 url = "https://api.edenai.run/v2/image/face_detection"
 app = Flask(__name__)
 
@@ -30,7 +29,7 @@ def call_vision_api(file_url):
     main_emotions = []
 
     for emotion, value in emotion_dict.items():
-        if value > (3*len(faces)):
+        if value > (2*len(faces)):
             main_emotions.append(emotion)
 
     return main_emotions
