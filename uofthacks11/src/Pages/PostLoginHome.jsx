@@ -17,6 +17,8 @@ function PostLogin() {
     <>
     <div className='overallContainer'>
     <LogoutButton/>
+    <a href='/AlbumView'><button className='button'>View Albums</button></a>
+    <button className='button'>Create Album</button>
     <div className='wrapper'>
       <div className='uploadContainer'>
         <div>
