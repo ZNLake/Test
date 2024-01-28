@@ -9,7 +9,7 @@ function PostLogin() {
 
 const { user} = useAuth0();
 const username = user.name;
-fetch('http://localhost:4173/getuser/username', {
+fetch(`http://172.17.0.2:5002/getuser/${username}`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
