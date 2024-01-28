@@ -1,6 +1,6 @@
 from flask import Flask, render_template, send_from_directory
 from vision import call_vision_api
-#from spotifyrec import get_track_list
+from spotifyrec import get_track_list, generate_playlist
 import os
 import json
 import requests
@@ -68,7 +68,6 @@ def upload_images(img_data):
     album = img_data.get('album')
     for file_url in file_urls:
         emotion = call_vision_api(file_url=file_url)
-        #emotion = ["sorrow"]
         payload = {
             "app": app_id,
             "record": {
@@ -88,7 +87,6 @@ def upload_images(img_data):
         else:
             print(f"Error: {response.status_code} - {response.text}")
 
-    #params = {"app": app_id, "query": f"album = '{album}' and user = '{user_id}'"}
     params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id}"'}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=params)
     data = response.json()
@@ -108,12 +106,11 @@ def upload_images(img_data):
     
     top_three = sorted(top_three, key=lambda x: x['score'], reverse=True)[:3]
 
-    #track_list = get_track_list(top_three)
-    #playlist = generate_playlist(track_list)
+    track_list = get_track_list(top_three)
+    playlist = generate_playlist(track_list)
+    update_playlist(album, playlist)
     
-
-    #return jsonify(playlist)
-    return json.dumps(top_three)
+    return json.dumps(playlist)
 
 @app.route('/get_album')
 def get_album(get_data):
@@ -121,10 +118,11 @@ def get_album(get_data):
     album_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id}"'}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=album_params)
     data = response.json()
-    images = []
+    ret = {}
+    ret['images'] = []
     for record in data['records']:
-        images.append(record['image']['value'])
-    return jsonify(images)
+        ret['images'].append(record['image']['value'])
+    return json.dumps(ret)
 
 @app.route('/get_image')
 def get_image(get_data):
@@ -132,8 +130,9 @@ def get_image(get_data):
     retrieve_img_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id} limit 1"'}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=retrieve_img_params)
     data = response.json()
-    image = data['records'][0]['image']['value']
-    return jsonify(image)
+    ret = {}
+    ret['image'] = data['records'][0]['image']['value']
+    return json.dumps(ret)
 
 def update_playlist(album, playlist):
     album_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id}"', "fields": ["$id"]}
@@ -151,7 +150,6 @@ def update_playlist(album, playlist):
             }
         }
         response = requests.put(add_record_endpoint, headers=add_record_headers, json=update_data)
-        # Handle response as needed
 
 
 @app.route('/', defaults={'path': ''})
