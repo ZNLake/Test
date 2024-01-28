@@ -8,10 +8,10 @@ import { useRef } from 'react';
 function PostLogin() {
 
   const carouselItems = [
-    { title: 'Item 1', description: 'Description for Item 1' },
-    { title: 'Item 2', description: 'Description for Item 2' },
-    { title: 'Item 3', description: 'Description for Item 3' },
-    { title: 'Item 4', description: 'Description for Item 4' },
+    { title: 'Item 1', description: 'This is a Album' },
+    { title: 'Item 2', description: 'This is a Album' },
+    { title: 'Item 3', description: 'This is a Album' },
+    { title: 'Item 4', description: 'This is a Album' },
     // Add more items as needed
   ];
 
@@ -39,6 +39,8 @@ const handleSubmit = async (event) => {
   } else {
     console.error('Error:', response.statusText);
   }
+
+  fetch()
 };
 // Initialize refs
 const albumNameRef = useRef();
@@ -55,7 +57,7 @@ const fileRef = useRef();
           <span className='text-black font-bold'>** Name Here**</span>
         </div>
         <form onSubmit={handleSubmit} className='h-full flex flex-col text-center items-center justify-center gap-1'>
-        <textarea ref={albumNameRef} className='textArea resize-none ml-11 overflow-hidden' rows={1} minLength={12} maxLength={20} placeholder='Album Name...'></textarea>
+        <textarea ref={albumNameRef} className='textArea resize-none ml-11 overflow-hidden' rows={1} minLength={9} maxLength={15} placeholder='Album Name...'></textarea>
         <div className='h-full'>
 <FileZone ref={fileRef}/>
         <button type="submit" className='text-black ml-auto'>Submit</button>
