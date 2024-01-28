@@ -1,13 +1,7 @@
 import './LoginButton.css';
 
 const LoginButton = () => {
-  const handleLogin = () => {
-    // Replace this with your custom authentication logic
-    // For example, you can use fetch to make a request to your backend
-    'http://localhost:5173/PostHome'
-  };
-
-  return <button className="loginbutton" onClick={handleLogin}>Log In</button>;
+  return <a className='text-black' href='http://localhost:5173/PostHome'><button className="loginbutton">Log In</button></a>;
 };
 
 export default LoginButton;

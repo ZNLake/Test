@@ -8,7 +8,7 @@ function PreLogin() {
     <div className="container">
       <div className="box">
       <img src={logo} alt="Logo" />
-      <p>Retro Vu</p>
+      <p className='text-black'>Retro Vu</p>
       <LoginButton/>
       </div>
     </div>
