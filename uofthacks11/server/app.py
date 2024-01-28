@@ -129,13 +129,17 @@ def get_album(get_data):
     return json.dumps(ret)
 
 @app.route('/get_image')
-def get_image(get_data):
-    album = get_data['album']
-    retrieve_img_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id} limit 1"'}
+def get_image():
+    retrieve_img_params = {"app": app_id, "query": f'user = "{user_id}"'}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=retrieve_img_params)
-    data = response.json()
+    records = response.json()["records"]
     ret = {}
-    ret['image'] = data['records'][0]['image']['value']
+    for record in records:
+        album = record["album"]["value"]
+        image = record["image"]["value"]
+        if album not in ret.keys():
+            ret[album] = image
+    print(json.dumps(ret))
     return json.dumps(ret)
 
 def update_playlist(album, playlist):
