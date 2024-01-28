@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Copy dist folder to Python image
-FROM python:3.9
+FROM python:3.10.8-slim-buster
 
 WORKDIR /app
 
@@ -19,6 +19,7 @@ COPY --from=build-stage /app/dist ./frontend
 
 RUN pip install -r requirements.txt
 
-CMD ["flask", "run"]
+ENTRYPOINT ["python"]
+CMD ["app.py"]
 
 EXPOSE 5000
