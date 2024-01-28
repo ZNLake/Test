@@ -5,7 +5,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './VerticalCarousel.css';
 import logo from '../assets/HackLogo.png'
-import { Link } from 'react-router-dom';
 
 VerticalCarousel.propTypes = {
   items: PropTypes.array.isRequired,
