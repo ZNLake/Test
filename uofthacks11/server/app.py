@@ -115,6 +115,15 @@ def get_album(get_data):
         images.append(record['image']['value'])
     return jsonify(images)
 
+@app.route('/get_image')
+def get_image(get_data):
+    album = get_data['album']
+    retrieve_img_params = {"app": app_id, "query": f"album = '{album}' and user = '{user_id} limit 1'"}
+    response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=retrieve_img_params)
+    data = response.json()
+    image = data['records'][0]['image']['value']
+    return jsonify(image)
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
