@@ -9,7 +9,7 @@ function App() {
       <Routes>
           <Route path="/" element={<PreLogin />} />
           <Route path="/PostHome" element={<PostLogin />} />
-          <Route path="/AlbumView" element={<AlbumView />} />s
+          <Route path="/AlbumView/:id" element={<AlbumView />} />s
       </Routes>
     </>
   )

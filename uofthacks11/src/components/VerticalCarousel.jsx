@@ -27,7 +27,7 @@ function VerticalCarousel ({ items }) {
   return (
     <Slider {...settings}>
       {items.map((item, index) => (
-          <div key={index} className="carousel-item">
+          <div key={index} className="carousel-item" onClick={() => window.location.href = `/AlbumView/${item.id}`}>
               <img className='logo ml-auto mr-auto' src={logo} alt="Logo" />
             <p>{item.description}</p>
           </div>

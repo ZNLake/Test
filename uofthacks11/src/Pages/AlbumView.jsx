@@ -18,17 +18,19 @@ function AlbumView() {
     <>
     <div className='overallContainer'>
     <LogoutButton/>
-    <div className='mainPageWrapper flex flex-col'>
+    <div className='mainPageWrapper flex flex-col h-3/4'>
         <p className='containerTitle'>
         Beach Day
         </p>
-        <VerticalCarousel className="h-full" items={carouselItems} />
+        <div className='h-3/4'>
+<VerticalCarousel className="h-full" items={carouselItems} />
+        </div>
         <iframe 
         src={embedUrl} 
         width="300" 
         height="380" 
-        frameBorder="0" 
-        allow="encrypted-media">
+        allow="encrypted-media"
+        style={{ backgroundColor: 'transparent' }}>
       </iframe>
     </div>
     </div>
