@@ -4,23 +4,27 @@ import './PostLogin.css'
 import FileZone from '../components/FileZone.jsx'
 import VerticalCarousel from '../components/VerticalCarousel.jsx';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from 'react';
 
 function PostLogin() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-const { user} = useAuth0();
-const username = user.name;
-fetch(`http://172.17.0.2:5002/getuser/${username}`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(user)
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch((error) => {
-  console.error('Error:', error);
-});
+  // Your fetch request or any other side effect
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetch(`http://localhost:15000/getuser/${user.email}`)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+    }
+  }, [isAuthenticated, user]);
+
+   if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+
+    console.log(user);
+    console.log('PostLogin2');
 
   const carouselItems = [
     { title: 'Item 1', description: 'Description for Item 1' },
@@ -29,7 +33,6 @@ fetch(`http://172.17.0.2:5002/getuser/${username}`, {
     { title: 'Item 4', description: 'Description for Item 4' },
     // Add more items as needed
   ];
-
   return (
     <>
     <div className='overallContainer'>
