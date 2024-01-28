@@ -27,7 +27,7 @@ function VerticalCarousel ({ items }) {
       {items.map((item, index) => (
         <div key={index} className="carousel-item">
           {/* Your content for each carousel item */}
-          <h3>{item.title}</h3>
+            <img className='logo' src={logo} alt="Logo" />
           <p>{item.description}</p>
         </div>
       ))}

@@ -3,24 +3,9 @@ import logo from '../assets/HackLogo.png'
 import './PostLogin.css'
 import FileZone from '../components/FileZone.jsx'
 import VerticalCarousel from '../components/VerticalCarousel.jsx';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useRef } from 'react';
 
 function PostLogin() {
-
-const { user} = useAuth0();
-const userEmail = user.email;
-fetch(`http://172.17.0.2:5002/getuser/${userEmail}`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(user)
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch((error) => {
-  console.error('Error:', error);
-});
 
   const carouselItems = [
     { title: 'Item 1', description: 'Description for Item 1' },
@@ -30,25 +15,58 @@ fetch(`http://172.17.0.2:5002/getuser/${userEmail}`, {
     // Add more items as needed
   ];
 
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  const albumName = albumNameRef.current.value;
+  const files = fileRef.current.files; // Adjust this line based on how you access files in your FileZone component
+
+  const formData = new FormData();
+  formData.append('albumName', albumName);
+
+  // Append files
+  for (let i = 0; i < files.length; i++) {
+    formData.append('files', files[i]);
+  }
+
+  const response = await fetch('your_route_url', {
+    method: 'POST',
+    body: formData
+  });
+
+  if (response.ok) {
+    console.log('Files and album name sent successfully');
+  } else {
+    console.error('Error:', response.statusText);
+  }
+};
+// Initialize refs
+const albumNameRef = useRef();
+const fileRef = useRef();
   return (
     <>
+    
     <div className='overallContainer'>
     <LogoutButton/>
-    <a href='/AlbumView'><button className='button'>View Albums</button></a>
-    <button className='button'>Create Album</button>
     <div className='wrapper'>
       <div className='uploadContainer'>
         <div>
           <img className='logo' src={logo} alt="Logo" />
           <span className='text-black font-bold'>** Name Here**</span>
         </div>
-        <FileZone/>
+        <form onSubmit={handleSubmit} className='h-full flex flex-col text-center items-center justify-center gap-1'>
+        <textarea ref={albumNameRef} className='textArea resize-none ml-11 overflow-hidden' rows={1} minLength={12} maxLength={20} placeholder='Album Name...'></textarea>
+        <div className='h-full'>
+<FileZone ref={fileRef}/>
+        <button type="submit" className='text-black ml-auto'>Submit</button>
+        </div>       
+</form>
       </div>
       <div className='mainPageWrapper'>
         <p className='containerTitle'>
         Albums
         </p>
-         <div>
+         <div className='mt-3'>
       <VerticalCarousel className="h-full" items={carouselItems} />
     </div>
       </div>
