@@ -5,6 +5,7 @@ import os
 import json
 import requests
 from flask import jsonify
+import http.client
 
 kintone_api_key = os.getenv('KINTONE_API_KEY')
 
@@ -36,6 +37,32 @@ def login(login_info):
     user_id = login_info.get('user')
     spotify_code = login_info.get('spotify_code')
     spotify_state = login_info.get('spotify_state')
+
+@app.route('/getuser/<email>')
+def get_user(email):
+    
+    #api call for token
+    conn = http.client.HTTPSConnection("")
+
+    payload = "grant_type=client_credentials&client_id=gOEkoNaxbDeDVHLXRXIEppzqD5GtvARj&client_secret=KMLU4rlSSC5GDTbAKg9hhK13AGgY2rYj4BrfsfXCX-CAtKMVyej6-2NYyOc0hVB8&audience=https://dev-3q743fc24vrnr2ng.us.auth0.com/api/v2/"
+
+    headers = { 'content-type': "application/x-www-form-urlencoded" }
+
+    conn.request("POST", "/dev-3q743fc24vrnr2ng.us.auth0.com/oauth/token", payload, headers)
+
+    res = conn.getresponse()
+    data = res.read()
+
+    print(data.decode("utf-8"))
+    MgmtApiAccessToken = data.decode("utf-8")
+        #api call for user info
+    conn = http.client.HTTPSConnection("dev-3q743fc24vrnr2ng.us.auth0.com")
+    headers = { 'authorization': f"Bearer %7{MgmtApiAccessToken}%7" }
+    conn.request("GET", f"/dev-3q743fc24vrnr2ng.us.auth0.com/api/v2/users-by-email?email=%7{email}%7D", headers=headers)
+    res = conn.getresponse()
+    data = res.read()
+    
+    return data.decode("utf-8")
 
 
 @app.route('/upload_images')

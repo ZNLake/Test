@@ -12,9 +12,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 <BrowserRouter>
  <Auth0Provider
     domain="dev-3q743fc24vrnr2ng.us.auth0.com"
-    clientId="gOEkoNaxbDeDVHLXRXIEppzqD5GtvARj"
+    clientId="ocUD1xYSIFGR394NR04QBa0AW1w399Il"
     authorizationParams={{
-      redirect_uri: "http://localhost:5173/PostHome"
+      redirect_uri: "http://localhost:15000/PostHome"
     }}
   >
     <App />
