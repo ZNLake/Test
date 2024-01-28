@@ -26,14 +26,11 @@ add_record_headers = {
 retrieve_records_headers = {
     'X-Cybozu-API-Token': kintone_api_key
 }
-params = {
-        "app": app_id,
-        "query": f"user = {user_id}"
-}
 
 @app.route('/login')
 def login(login_info):
     global user_id, spotify_code, spotify_state
+    login_info = json.loads(login_info)
     user_id = login_info.get('user')
     spotify_code = login_info.get('spotify_code')
     spotify_state = login_info.get('spotify_state')
@@ -69,9 +66,9 @@ def get_user(email):
 def upload_images(img_data):
     file_urls = img_data.get('file_urls')
     album = img_data.get('album')
-    # Rest of the code remains the same
     for file_url in file_urls:
         emotion = call_vision_api(file_url=file_url)
+        #emotion = ["sorrow"]
         payload = {
             "app": app_id,
             "record": {
@@ -86,31 +83,15 @@ def upload_images(img_data):
         }
         response = requests.post(add_record_endpoint, headers=add_record_headers, data=json.dumps(payload))
         
-        # Rest of the code remains the same
-    for file_url in file_urls:
-        emotion = call_vision_api(file_url=file_url)
-        payload = {
-            "app": app_id,
-            "record": {
-                "user": {"value": user_id},
-                "spotify_code": {"value": spotify_code},
-                "spotify_state": {"value": spotify_state},
-                "album": {"value": album}, 
-                "image": {"value": file_url},
-                "emotion": {"value": emotion},  
-                "spotify": {"value": ""}  
-            }
-        }
-        response = requests.post(add_record_endpoint, headers=add_record_headers, data=json.dumps(payload))
-
         if response.status_code == 200:
             print("Record added successfully.")
         else:
             print(f"Error: {response.status_code} - {response.text}")
 
+    #params = {"app": app_id, "query": f"album = '{album}' and user = '{user_id}'"}
+    params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id}"'}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=params)
     data = response.json()
-    
     emotion_count = {}
     for record in data['records']:
         for emotion in record['emotion']['value']:
@@ -128,13 +109,16 @@ def upload_images(img_data):
     top_three = sorted(top_three, key=lambda x: x['score'], reverse=True)[:3]
 
     #track_list = get_track_list(top_three)
+    #playlist = generate_playlist(track_list)
     
-    return jsonify(top_three)
+
+    #return jsonify(playlist)
+    return json.dumps(top_three)
 
 @app.route('/get_album')
 def get_album(get_data):
     album = get_data['album']
-    album_params = {"app": app_id, "query": f"album = '{album}' and user = '{user_id}'"}
+    album_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id}"'}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=album_params)
     data = response.json()
     images = []
@@ -145,11 +129,30 @@ def get_album(get_data):
 @app.route('/get_image')
 def get_image(get_data):
     album = get_data['album']
-    retrieve_img_params = {"app": app_id, "query": f"album = '{album}' and user = '{user_id} limit 1'"}
+    retrieve_img_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id} limit 1"'}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=retrieve_img_params)
     data = response.json()
     image = data['records'][0]['image']['value']
     return jsonify(image)
+
+def update_playlist(album, playlist):
+    album_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id}"', "fields": ["$id"]}
+    response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=album_params)
+    data = response.json()
+    for record in data['records']:
+        record_id = record['$id']['value']
+        update_data = {
+            "app": app_id,
+            "id": record_id,
+            "record": {
+                "spotify": {
+                    "value": playlist
+                }
+            }
+        }
+        response = requests.put(add_record_endpoint, headers=add_record_headers, json=update_data)
+        # Handle response as needed
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -158,6 +161,7 @@ def serve(path):
         return send_from_directory(app.static_folder, path)
     else:
         return send_from_directory(app.static_folder, 'index.html')
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

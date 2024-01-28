@@ -4,7 +4,8 @@ import requests
 import os
 import os
 
-google_headers = {"Authorization": f"Bearer: {os.getenv('VISION_API_KEY')}"}
+vision_api_key = os.getenv('VISION_API_KEY')
+google_headers = {"Authorization": f"Bearer {vision_api_key}"}
 url = "https://api.edenai.run/v2/image/face_detection"
 app = Flask(__name__)
 
@@ -15,7 +16,6 @@ def call_vision_api(file_url):
         "file_url": file_url,
         "fallback_providers": ""
     }
-
     response = requests.post(url, json=json_payload, headers=google_headers)
     result = json.loads(response.text)
 
