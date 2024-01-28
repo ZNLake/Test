@@ -4,6 +4,7 @@ from vision import call_vision_api
 import os
 import json
 import requests
+from flask import jsonify
 
 kintone_api_key = os.getenv('KINTONE_API_KEY')
 
@@ -30,15 +31,35 @@ params = {
 }
 
 @app.route('/login')
-def login(user, spotify_code, spotify_state):
-    global user_id, code, state
-    user = user
-    spotify_code = spotify_code
-    spotify_state = spotify_state
+def login(login_info):
+    global user_id, spotify_code, spotify_state
+    user_id = login_info.get('user')
+    spotify_code = login_info.get('spotify_code')
+    spotify_state = login_info.get('spotify_state')
 
 
 @app.route('/upload_images')
-def upload_images(file_urls, album):
+def upload_images(img_data):
+    file_urls = img_data.get('file_urls')
+    album = img_data.get('album')
+    # Rest of the code remains the same
+    for file_url in file_urls:
+        emotion = call_vision_api(file_url=file_url)
+        payload = {
+            "app": app_id,
+            "record": {
+                "user": {"value": user_id},
+                "spotify_code": {"value": spotify_code},
+                "spotify_state": {"value": spotify_state},
+                "album": {"value": album}, 
+                "image": {"value": file_url},
+                "emotion": {"value": emotion},  
+                "spotify": {"value": ""}  
+            }
+        }
+        response = requests.post(add_record_endpoint, headers=add_record_headers, data=json.dumps(payload))
+        
+        # Rest of the code remains the same
     for file_url in file_urls:
         emotion = call_vision_api(file_url=file_url)
         payload = {
@@ -81,17 +102,18 @@ def upload_images(file_urls, album):
 
     #track_list = get_track_list(top_three)
     
-    return top_three
+    return jsonify(top_three)
 
 @app.route('/get_album')
-def get_album(album):
+def get_album(get_data):
+    album = get_data['album']
     album_params = {"app": app_id, "query": f"album = '{album}' and user = '{user_id}'"}
     response = requests.get(retrieve_records_endpoint, headers=retrieve_records_headers, params=album_params)
     data = response.json()
     images = []
     for record in data['records']:
         images.append(record['image']['value'])
-    return images
+    return jsonify(images)
 
 
 @app.route('/', defaults={'path': ''})
