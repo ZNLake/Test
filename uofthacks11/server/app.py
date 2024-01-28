@@ -125,5 +125,6 @@ def serve(path):
         return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
-    file_urls = ['https://sadanduseless.b-cdn.net/wp-content/uploads/2021/11/awkward-family-photo15.jpg', 'https://assets3.cbsnewsstatic.com/hub/i/r/2010/08/20/89d66a34-a642-11e2-a3f0-029118418759/thumbnail/640x480/3c127f50286ff6f1fc5df89d5b79f25b/iStock_000008964742XSmall.jpg?v=9bdba4fec5b17ee7e8ba9ef8c71cf431', 'https://globalnews.ca/wp-content/uploads/2017/10/scare.jpg?quality=85&strip=all', 'https://t3.ftcdn.net/jpg/02/47/40/98/360_F_247409832_pPugfgU5cKLsrH5OCJRMn5JTcy2L1Rrg.jpg', 'https://media.cnn.com/api/v1/images/stellar/prod/200723132104-woman-crying-stock.jpg?q=w_3861,h_2574,x_0,y_0,c_fill']
-    upload_images(file_urls, 1)
+    app.run(debug=True, host='172.17.0.2' ,port=5002)
+
+    
