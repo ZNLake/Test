@@ -12,8 +12,6 @@ kintone_api_key = os.getenv('KINTONE_API_KEY')
 app = Flask(__name__, static_folder='./frontend')
 
 user_id = None
-spotify_code = None
-spotify_state = None
 
 base_url = "https://katarinaav.kintone.com"
 app_id = "2"
@@ -29,11 +27,9 @@ retrieve_records_headers = {
 
 @app.route('/login')
 def login(login_info):
-    global user_id, spotify_code, spotify_state
+    global user_id
     login_info = json.loads(login_info)
     user_id = login_info.get('user')
-    spotify_code = login_info.get('spotify_code')
-    spotify_state = login_info.get('spotify_state')
 
 @app.route('/getuser/<email>')
 def get_user(email):
@@ -72,8 +68,6 @@ def upload_images(img_data):
             "app": app_id,
             "record": {
                 "user": {"value": user_id},
-                "spotify_code": {"value": spotify_code},
-                "spotify_state": {"value": spotify_state},
                 "album": {"value": album}, 
                 "image": {"value": file_url},
                 "emotion": {"value": emotion},  
