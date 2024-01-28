@@ -165,22 +165,6 @@ def serve(path):
         return send_from_directory(app.static_folder, 'index.html')
 
 
-# if __name__ == '__main__':
-#     port = int(os.environ.get("PORT", 5000))
-#     app.run(debug=True,host='0.0.0.0',port=port)
 if __name__ == '__main__':
-    #port = int(os.environ.get("PORT", 5000))
-    #app.run(debug=True,host='0.0.0.0',port=port)
-    login_info = {'user': 'katarina', 'spotify_code': 'aaaa', 'spotify_state': 'bbbb'}
-    login_info_json = json.dumps(login_info)
-    print(login_info_json)
-    login(login_info_json)
-    #file_urls = {'album': '18th bday', 'file_urls': ['https://sadanduseless.b-cdn.net/wp-content/uploads/2021/11/awkward-family-photo15.jpg', 'https://assets3.cbsnewsstatic.com/hub/i/r/2010/08/20/89d66a34-a642-11e2-a3f0-029118418759/thumbnail/640x480/3c127f50286ff6f1fc5df89d5b79f25b/iStock_000008964742XSmall.jpg?v=9bdba4fec5b17ee7e8ba9ef8c71cf431', 'https://globalnews.ca/wp-content/uploads/2017/10/scare.jpg?quality=85&strip=all', 'https://t3.ftcdn.net/jpg/02/47/40/98/360_F_247409832_pPugfgU5cKLsrH5OCJRMn5JTcy2L1Rrg.jpg', 'https://media.cnn.com/api/v1/images/stellar/prod/200723132104-woman-crying-stock.jpg?q=w_3861,h_2574,x_0,y_0,c_fill']}
-    file_urls = {'album': 'early_childhood', 'file_urls': ['https://scontent-yyz1-1.xx.fbcdn.net/v/t1.18169-9/1923706_10704337323_3710_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=4dc865&_nc_ohc=dnnSJVnsuqsAX_9mHwM&_nc_ht=scontent-yyz1-1.xx&oh=00_AfDhN84gX0izC_L-PWLsiyh7LyQ0Hg0x4Jz1WeuR6S0a5Q&oe=65DD64AE', 
-                                                    'https://scontent-yyz1-1.xx.fbcdn.net/v/t1.18169-9/10398944_12845172323_4205_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=4dc865&_nc_ohc=IbkP-jllwpkAX-NohGz&_nc_ht=scontent-yyz1-1.xx&oh=00_AfB7a3qrnpZmtHC_qkjb9OcXltOL7lUGIVVWvq35cey0Tw&oe=65DD429A', 
-                                                    'https://scontent-yyz1-1.xx.fbcdn.net/v/t1.18169-9/1929907_19036732323_7321_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=4dc865&_nc_ohc=z5H1H7of-xQAX_ZNj5U&_nc_ht=scontent-yyz1-1.xx&oh=00_AfD8uZluS91KWioV9Uwm46BuYJYzZEvNvoExDYpyXAmnvQ&oe=65DD7CBC',
-                                                    'https://scontent-yyz1-1.xx.fbcdn.net/v/t1.18169-9/1923956_39878552323_9947_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=4dc865&_nc_ohc=EFOlKuauRHUAX97By5S&_nc_ht=scontent-yyz1-1.xx&oh=00_AfA2JBCCzUtBCBIZP-uybygzGmlZEONVs6YtUgoSbAkN2w&oe=65DD640C',
-                                                    'https://scontent-yyz1-1.xx.fbcdn.net/v/t1.18169-9/1923956_39878507323_7107_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=4dc865&_nc_ohc=oGkf_FRWDkkAX8B5kV-&_nc_ht=scontent-yyz1-1.xx&oh=00_AfCu82yKNo7fhLEFP8-9R0q1QdyL8CFc_nFNhwSIpBus7A&oe=65DD4F88']}
-    
-    file_urls_json = json.dumps(file_urls)
-    get_playlist('early_childhood')
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True,host='0.0.0.0',port=port)
