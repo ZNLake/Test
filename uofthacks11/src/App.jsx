@@ -10,7 +10,7 @@ function App() {
       <Routes>
           <Route path="/" element={<PreLogin />} />
           <Route path="/PostHome" element={<PostLogin />} />
-          <Route path="/AlbumView" element={<AlbumView />} />
+          <Route path="/AlbumView/:id" element={<AlbumView />} />
           <Route path="/login" element={<Login />} />
       </Routes>
     </>

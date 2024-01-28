@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './VerticalCarousel.css';
+import logo from '../assets/HackLogo.png'
+import { Link } from 'react-router-dom';
 
 VerticalCarousel.propTypes = {
   items: PropTypes.array.isRequired,
@@ -25,11 +27,10 @@ function VerticalCarousel ({ items }) {
   return (
     <Slider {...settings}>
       {items.map((item, index) => (
-        <div key={index} className="carousel-item">
-          {/* Your content for each carousel item */}
-          <h3>{item.title}</h3>
-          <p>{item.description}</p>
-        </div>
+          <div key={index} className="carousel-item" onClick={() => window.location.href = `/AlbumView/${item.id}`}>
+              <img className='logo ml-auto mr-auto' src={logo} alt="Logo" />
+            <p>{item.description}</p>
+          </div>
       ))}
     </Slider>
   );
