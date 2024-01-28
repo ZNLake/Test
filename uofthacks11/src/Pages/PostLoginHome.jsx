@@ -24,7 +24,8 @@ const fileRef = useRef();
 
   const albumName = albumNameRef.current.value;
   const files = fileRef.current.files; // Adjust this line based on how you access files in your FileZone component
-
+    console.log(albumName);
+    console.log(files);
   const formData = new FormData();
   formData.append('albumName', albumName);
 
@@ -46,6 +47,19 @@ const fileRef = useRef();
 
   fetch()
 };
+let item;
+fetch('http://localhost:15000/get_image')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    data.forEach(item => {
+      console.log(item);
+      const albumName = item.album;
+      const imageUrls = item.urls;
+      // Do something with albumName and imageUrls
+    });
+  })
+  .catch(error => console.error('Error:', error));
 
   return (
     <>
@@ -70,7 +84,7 @@ const fileRef = useRef();
         Albums
         </p>
          <div className='mt-3'>
-      <VerticalCarousel className="h-full" items={carouselItems} />
+      <VerticalCarousel className="h-full" items={item} />
     </div>
       </div>
     </div>

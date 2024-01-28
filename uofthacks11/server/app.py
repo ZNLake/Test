@@ -62,7 +62,7 @@ def get_user(email):
     return data.decode("utf-8")
 
 
-@app.route('/upload_images')
+@app.route('/upload_images', methods=['POST'])
 def upload_images(img_data):
     file_urls = img_data.get('file_urls')
     album = img_data.get('album')
@@ -116,7 +116,7 @@ def get_playlist(album):
     ret['playlist'] = playlist
     return json.dumps(ret)
 
-@app.route('/get_album')
+@app.route('/get_album', methods=['POST'])
 def get_album(get_data):
     album = get_data['album']
     album_params = {"app": app_id, "query": f'album = "{album}" and user = "{user_id}"'}

@@ -1,5 +1,4 @@
-import {useEffect, useState} from 'react';
-import {useMemo} from 'react';
+import {useMemo,useEffect, useState,  forwardRef, useImperativeHandle} from 'react';
 import {useDropzone} from 'react-dropzone';
 import './FileZoneStyling.css';
 import uploadIcon from '../assets/uploadIcon.png'
@@ -65,7 +64,7 @@ const img = {
   height: '100%'
 };
 
-function FileZone () {
+function FileZone (_, ref) {
   const [files, setFiles] = useState([]);
   const {getRootProps, getInputProps, isFocused,
     isDragAccept,
@@ -107,7 +106,13 @@ function FileZone () {
    useEffect(() => {
     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, []);
+  }, [files]);
+
+  // Expose the files state and clearFiles method to the parent component
+  useImperativeHandle(ref, () => ({
+    files,
+    clearFiles: () => setFiles([]),
+  }));
 
   return (        
       <div className='fileZoneWrapper'>
@@ -122,4 +127,5 @@ function FileZone () {
     </div>)
 }
 
-export default FileZone;
+const ForwardedFileZone = forwardRef(FileZone);
+export default ForwardedFileZone;
