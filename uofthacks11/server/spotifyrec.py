@@ -1,7 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
-POPULATION_SCORE = 80
+POPULARITY_SCORE = 80
 
 # Let me know if you need the client ID and secret
 spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
@@ -46,10 +46,34 @@ def get_track_list() -> list:
 
     # Let user choose genre seeds
     # Available genres: https://developer.spotify.com/console/get-available-genre-seeds/
-    results = spotify.recommendations(seed_genres=["pop"], limit=20, target_danceability=attributes[0], target_energy=attributes[1], target_acousticness=attributes[2], target_liveness=attributes[3], target_loudness=attributes[4], target_mode=round(attributes[5]), target_popularity=POPULATION_SCORE, target_valence=attributes[7])
+    # Available genres: https://developer.spotify.com/console/get-available-genre-seeds/
+    results = spotify.recommendations(seed_artists=["4Z8W4fKeB5YxbusRsdQVPb", "1dfeR4HaWDbWqFHLkxsg1d", "3fMbdgg4jU18AjLCKBhRSm", "4tpUmLEVLCGFr93o8hFFIB", "0k17h0D3J5VfsdmQ1iZtE9"], limit=50, target_danceability=attributes[0], target_energy=attributes[1], target_acousticness=attributes[2], target_liveness=attributes[3], target_loudness=attributes[4], target_mode=round(attributes[5]), target_popularity=POPULARITY_SCORE, target_valence=attributes[7])
 
-    track_list = []
+    track_ids = []
+    album_ids = []
     for track in results['tracks']:
-        track_list.append(track['name'])
+        # print(track['name'] + ' - ' + track['artists'][0]['name'])
+        track_ids.append(track['id'])
+        album_ids.append(track['album']['id'])
 
-    return track_list
+    i = 0
+    approved_tracks = []
+    for album in album_ids:
+        result = spotify.album(album)
+        release_year = result["release_date"][:4]
+        if int(release_year) < 2010:
+            approved_tracks.append(track_ids[i])
+        i += 1
+
+    print(approved_tracks)
+    return approved_tracks
+
+
+def generate_playlist(userID) -> None:
+    track_list = get_track_list()
+    updated_track_list = []
+    for track in track_list:
+        updated_track_list.append("spotify:track:" + track)
+    playlist = spotify.user_playlist_create(user=userID, name="Your Playlist", public=False)
+    playlist_id = playlist['id']
+    spotify.playlist_add_items(playlist_id=playlist_id, items=updated_track_list)
