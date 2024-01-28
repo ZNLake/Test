@@ -1,0 +1,6 @@
+.loginbutton {
+  background-color: #ca8e4d;
+  box-shadow: -2px 3px 0px 0px #a5733c, -3px 4px 0px 2px black;
+  border-radius: 40px;
+  border: 2px solid black;
+}
