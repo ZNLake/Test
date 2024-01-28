@@ -99,8 +99,6 @@ function PostLogin() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
 
-
-
   // Your fetch request or any other side effect
   useEffect(() => {
     if (isAuthenticated) {
@@ -137,6 +135,7 @@ function PostLogin() {
           <img className='logo' src={logo} alt="Logo" />
           <span className='text-black font-bold'>** Name Here**</span>
         </div>
+        <textarea className='textArea' placeholder='Description'></textarea>
         <FileZone/>
       </div>
       <div className='mainPageWrapper'>
