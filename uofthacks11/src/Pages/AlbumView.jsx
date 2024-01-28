@@ -1,37 +1,19 @@
 import LogoutButton from '../components/LogoutButton'
 import './PostLogin.css'
 import VerticalCarousel from '../components/VerticalCarousel.jsx';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-
+import pic1 from '../assets/img1.jpeg'
+import pic2 from '../assets/img2.jpeg'
+import pic3 from '../assets/img3.jpeg'
+import pic4 from '../assets/img4.jpeg'
 
 
 function AlbumView() {
-  const carouselItems = [
-    { title: 'Item 1', description: 'Description for Item 1' },
-    { title: 'Item 2', description: 'Description for Item 2' },
-    { title: 'Item 3', description: 'Description for Item 3' },
-    { title: 'Item 4', description: 'Description for Item 4' },
-    // Add more items as needed
-  ];
-
-  const {setAlbum} = useState(null); 
-  const { id } = useParams();
-
-useEffect(() => {
-  fetch('http://localhost:15000/get_album', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ id }),
-  })
-    .then(response => response.json())
-    .then(data => setAlbum(data));
-}, [id, setAlbum]);
-
-  const spotifyUrl = 'https://open.spotify.com/episode/7makk4oTQel546B0PZlDM5';
-  const embedUrl = `https://open.spotify.com/embed?uri=${spotifyUrl}`;
+const pics = [
+  { name: 'Picture 1', pic: pic1 },
+  { name: 'Picture 2', pic: pic2 },
+  { name: 'Picture 3', pic: pic3 },
+  { name: 'Picture 4', pic: pic4 }
+];
 
   return (
     <>
@@ -39,21 +21,20 @@ useEffect(() => {
     <LogoutButton/>
     <div className='mainPageWrapper flex flex-col h-3/4'>
         <p className='containerTitle'>
-        Beach Day
+        Celebration
         </p>
         <div className='h-3/4'>
-<VerticalCarousel className="h-full" items={carouselItems} />
+<VerticalCarousel className="h-full" items={pics} />
         </div>
-        <iframe 
-        src={embedUrl} 
-        width="300" 
-        frameBorder="{0}"
-        height="380" 
-        allow="autoplay;
-      clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        style={{ backgroundColor: 'transparent' }}>
-      </iframe>
+<iframe 
+  style={{borderRadius: "12px"}} 
+  src="https://open.spotify.com/embed/playlist/7DOZMHSFVusL609L250Ysb?utm_source=generator" 
+  width="100%" 
+  height="352" 
+  frameBorder="0"  
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy">
+</iframe>
     </div>
     </div>
     </>

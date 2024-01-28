@@ -24,11 +24,11 @@ function VerticalCarousel ({ items }) {
   };
 
   return (
-    <Slider {...settings}>
+    <Slider {...settings} className="ml-auto mr-auto" style={{ width: '50%', height: 'auto' }}>
       {items.map((item, index) => (
-          <div key={index} className="carousel-item" onClick={() => window.location.href = `/AlbumView/${item.album}`}>
-              <img className='logo ml-auto mr-auto' src={item.urls} alt="Logo" />
-            <p>{item.album}</p>
+          <div key={index} className="carousel-item" onClick={() => window.location.href = `/AlbumView/${item.name}`}>
+              <img className='logo ml-auto mr-auto' src={item.pic} alt="Logo" />
+            <p className='text-black'>{item.name}</p>
           </div>
       ))}
     </Slider>
