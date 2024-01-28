@@ -1,0 +1,39 @@
+.wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.overallContainer {
+  background-color: #ffca81;
+  height: 100vh;
+}
+
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.galleryContainer {
+}
+
+.containerTitle {
+  color: white;
+  border-radius: 19px;
+  width: 30%;
+  height: 10%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-family: Itim;
+  font-size: 2em;
+  font-weight: 400;
+  background-color: #362c4d;
+}
+
+.gallery {
+}
+
+.logo {
+  display: inline;
+}
