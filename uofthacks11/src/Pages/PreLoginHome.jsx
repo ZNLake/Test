@@ -1,5 +1,5 @@
 import './PreLogin.css'
-import LoginButton from '../Components/LoginButton.jsx'
+import LoginButton from '../components/LoginButton.jsx'
 import logo from '../assets/HackLogo.png'
 import preLoginBackground from '../assets/PreLoginBackground.png'; // Import the background image
 
