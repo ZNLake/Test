@@ -7,8 +7,7 @@ import requests
 from flask import jsonify
 import http.client
 
-#kintone_api_key = os.getenv('KINTONE_API_KEY')
-kintone_api_key = "ox9VIBurT3MvBojBChFfn2BfqeBbskkEIox3nqCj"
+kintone_api_key = os.getenv('KINTONE_API_KEY')
 
 app = Flask(__name__, static_folder='./frontend')
 

@@ -4,8 +4,7 @@ import requests
 import os
 import os
 
-#vision_api_key = os.getenv('VISION_API_KEY')
-vision_api_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZDUwZmExNzAtYjcwNy00Y2Q2LTkyM2YtY2Y0YWEzMDhhNTk1IiwidHlwZSI6ImZyb250X2FwaV90b2tlbiJ9.reKoozcUu7_hL25nvm2nQBYZ1RBV5hMJGNngvN7y6co"
+vision_api_key = os.getenv('VISION_API_KEY')
 google_headers = {"Authorization": f"Bearer {vision_api_key}"}
 url = "https://api.edenai.run/v2/image/face_detection"
 app = Flask(__name__)
