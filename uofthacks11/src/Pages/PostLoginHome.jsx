@@ -12,7 +12,7 @@ function PostLogin() {
   // Your fetch request or any other side effect
   useEffect(() => {
     if (isAuthenticated) {
-      fetch(`http://0.0.0.0:5000/getuser/${user.email}`)
+      fetch(`http://localhost:15000/getuser/${user.email}`)
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error));

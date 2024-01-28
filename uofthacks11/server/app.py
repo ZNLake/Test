@@ -151,7 +151,6 @@ def get_image(get_data):
     image = data['records'][0]['image']['value']
     return jsonify(image)
 
-
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
