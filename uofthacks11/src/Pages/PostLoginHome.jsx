@@ -3,25 +3,8 @@ import logo from '../assets/HackLogo.png'
 import './PostLogin.css'
 import FileZone from '../components/FileZone.jsx'
 import VerticalCarousel from '../components/VerticalCarousel.jsx';
-import { useAuth0 } from "@auth0/auth0-react";
 
 function PostLogin() {
-
-const { user} = useAuth0();
-const username = user.name;
-fetch(`http://172.17.0.2:5002/getuser/${username}`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(user)
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch((error) => {
-  console.error('Error:', error);
-});
-
   const carouselItems = [
     { title: 'Item 1', description: 'Description for Item 1' },
     { title: 'Item 2', description: 'Description for Item 2' },
