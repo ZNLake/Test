@@ -1,4 +1,4 @@
-import LogoutButton from '../Components/LogoutButton'
+import LogoutButton from '../components/LogoutButton'
 import './PostLogin.css'
 import VerticalCarousel from '../components/VerticalCarousel.jsx';
 

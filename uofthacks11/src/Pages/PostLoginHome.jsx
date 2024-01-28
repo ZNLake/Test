@@ -1,4 +1,4 @@
-import LogoutButton from '../Components/LogoutButton'
+import LogoutButton from '../components/LogoutButton'
 import logo from '../assets/HackLogo.png'
 import './PostLogin.css'
 import FileZone from '../components/FileZone.jsx'
